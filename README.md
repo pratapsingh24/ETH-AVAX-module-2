@@ -75,3 +75,12 @@ Calls getWallet on component mount to initialize the wallet connection.
 
 return:
 Renders the main structure of the page, including the header and the result of initUser.
+
+
+
+## Authors
+Pratap Singh
+@pratapsingh24
+
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details
