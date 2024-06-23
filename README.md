@@ -53,6 +53,10 @@ Waits for the transaction to complete and then updates the balance by calling ge
 Calls the withdraw method on the smart contract to withdraw 1 ETH.
 Waits for the transaction to complete and then updates the balance by calling getBalance.
 
+8. getTotalSupply: Fetches the total supply of ETH in the contract and sets it to the totalSupply state.
+   
+9. getOwner: Fetches the contract owner's address and sets it to the owner state.
+
 ## Component Rendering
 
 1. initUser:
