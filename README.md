@@ -1,7 +1,7 @@
 # ETH-AVAX-module-2
 
 
-# Steps to launch the front-end page:
+## Steps to launch the front-end page:
 
 Inside the project directory, in the terminal type: npm i
 
@@ -17,16 +17,61 @@ After this, the project will be running on our localhost. Typically at http://lo
 
 
 
-# Functions used:
+## State Variables
+ethWallet: Stores the Ethereum wallet object (MetaMask).
 
-getBalance(): A view function that returns the current balance of the contract.
+account: Stores the user's Ethereum account address.
 
-depositamount(uint256 _amount) payable: A function that allows users to deposit a specified amount (_amount) to the contract. The payable modifier allows the function to receive Ether. It updates the balance variable, emits a Deposit event, and performs assertions to ensure the transaction is completed successfully.
+atm: Stores the reference to the smart contract.
 
-withdrawamount(uint256 _withdrawAmount): A function that allows users to withdraw a specified amount (_withdrawAmount) from the contract. It checks if the contract has sufficient balance and reverts if the balance is insufficient. It updates the balance variable, emits a Withdraw event, and performs assertions to ensure the transaction is completed successfully.
+balance: Stores the user's balance from the smart contract.
 
-error InsufficientBalance(uint256 balance, uint256 withdrawAmount): A custom error that is used when a withdrawal amount exceeds the contract balance.
+## Constants
+contractAddress: The address of the deployed smart contract.
 
-checkbalance(): To check the balance of the user.
+atmABI: The smart contract's ABI (Application Binary Interface) is imported from a JSON file.
 
-getbalancefromwalletaddress(address walletAddress): It will check the balance of another account with the given wallet address. Anyone will be abale to check the balance of any account with the wallet address.
+## Functions
+getWallet:
+Checks if MetaMask is installed by checking window.ethereum.
+If MetaMask is available, sets ethWallet to window.ethereum.
+If ethWallet is set, requests the user's Ethereum accounts and calls handleAccount with the account.
+
+handleAccount:
+Takes an account as a parameter.
+If an account is provided, sets the account state and logs it. Otherwise, logs "No account found".
+
+connectAccount:
+If MetaMask is not installed, alerts the user.
+Otherwise, requests the user's accounts from MetaMask and handles the account using handleAccount.
+After connecting the account, calls getATMContract to get the smart contract reference.
+
+getATMContract:
+Creates a provider and signer using ethers.
+Creates a new ethers.Contract instance with the contract address, ABI, and signer.
+Sets the atm state to this contract instance.
+
+getBalance:
+If the contract instance (atm) is set, calls the getBalance method on the contract and updates the balance state.
+
+deposit:
+Calls the deposit method on the smart contract to deposit 1 ETH.
+Waits for the transaction to complete and then updates the balance by calling getBalance.
+
+withdraw:
+Calls the withdraw method on the smart contract to withdraw 1 ETH.
+Waits for the transaction to complete and then updates the balance by calling getBalance.
+
+## Component Rendering
+
+initUser:
+Checks if MetaMask is installed. If not, returns a message asking the user to install MetaMask.
+If the account is not connected, returns a button to connect the MetaMask wallet.
+If the balance is undefined, calls getBalance to fetch the balance.
+Renders the user's account, balance, and buttons to deposit and withdraw 1 ETH.
+
+useEffect:
+Calls getWallet on component mount to initialize the wallet connection.
+
+return:
+Renders the main structure of the page, including the header and the result of initUser.
